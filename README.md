@@ -22,7 +22,14 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Add this config to `application.rb`:
+
+```ruby
+PoloniexRuby.setup do | config |
+    config.key = 'my api key'
+    config.secret = 'my secret token'
+end
+```
 
 ## Development
 
@@ -32,7 +39,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/poloniex_ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/ntamvl/poloniex_ruby. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Tam Nguyen](http://ntam.me/) code of conduct.
 
 
 ## License
