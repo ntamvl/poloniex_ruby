@@ -3,124 +3,134 @@ require "poloniex_ruby/version"
 require 'rest-client'
 require 'openssl'
 require 'addressable/uri'
+require "deep_symbolize"
+require 'configuration'
 
 module PoloniexRuby
-  class << self
-    attr_accessor :configuration
-  end
-
-  def self.setup
-    @configuration ||= Configuration.new
-    yield( configuration )
-  end
-
-  class Configuration
-    attr_accessor :key, :secret
-
-    def intialize
-      @key    = ''
-      @secret = ''
-    end
-  end
 
   def self.get_all_daily_exchange_rates( currency_pair )
     res = get 'returnChartData', currencyPair: currency_pair, period: 86400,  start: 0, :end => Time.now.to_i
+    res_hash res
   end
 
   def self.ticker
-    get 'returnTicker'
+    res = get 'returnTicker'
+    res_hash res
   end
 
   def self.volume
-    get 'return24hVolume'
+    res = get 'return24hVolume'
+    res_hash res
   end
 
   def self.order_book( currency_pair )
-    get 'returnOrderBook', currencyPair: currency_pair
+    res = get 'returnOrderBook', currencyPair: currency_pair
+    res_hash res
   end
 
   def self.active_loans
-    post 'returnActiveLoans'
+    res = post 'returnActiveLoans'
+    res_hash res
   end
 
   def self.balances
-    post 'returnBalances'
+    res = post 'returnBalances'
+    res_hash res
   end
 
   def self.lending_history( start = 0, end_time = Time.now.to_i )
-    post 'returnLendingHistory', start: start, :end => end_time
+    res = post 'returnLendingHistory', start: start, :end => end_time
+    res_hash res
   end
 
   def self.currencies
-    get 'returnCurrencies'
+    res = get 'returnCurrencies'
+    res_hash res
   end
 
   def self.complete_balances
-    post 'returnCompleteBalances'
+    res = post 'returnCompleteBalances'
+    res_hash res
   end
 
   def self.open_orders( currency_pair )
-    post 'returnOpenOrders', currencyPair: currency_pair
+    res = post 'returnOpenOrders', currencyPair: currency_pair
+    res_hash res
   end
 
   def self.trade_history( currency_pair, start = 0, end_time = Time.now.to_i )
-    post 'returnTradeHistory', currencyPair: currency_pair, start: start, :end => end_time
+    res = post 'returnTradeHistory', currencyPair: currency_pair, start: start, :end => end_time
+    res_hash res
   end
 
   def self.buy( currency_pair, rate, amount )
-    post 'buy', currencyPair: currency_pair, rate: rate, amount: amount
+    res = post 'buy', currencyPair: currency_pair, rate: rate, amount: amount
+    res_hash res
   end
 
   def self.sell( currency_pair, rate, amount )
-    post 'sell', currencyPair: currency_pair, rate: rate, amount: amount
+    res = post 'sell', currencyPair: currency_pair, rate: rate, amount: amount
+    res_hash res
   end
 
   def self.cancel_order( currency_pair, order_number )
-    post 'cancelOrder', currencyPair: currency_pair, orderNumber: order_number
+    res = post 'cancelOrder', currencyPair: currency_pair, orderNumber: order_number
+    res_hash res
   end
 
   def self.move_order( order_number, rate )
-    post 'moveOrder', orderNumber: order_number, rate: rate
+    res = post 'moveOrder', orderNumber: order_number, rate: rate
+    res_hash res
   end
 
   def self.withdraw( currency, amount, address )
-    post 'widthdraw', currency: currency, amount: amount, address: address
+    res = post 'widthdraw', currency: currency, amount: amount, address: address
+    res_hash res
   end
 
   def self.available_account_balances
-    post 'returnAvailableAccountBalances'
+    res = post 'returnAvailableAccountBalances'
+    res_hash res
   end
 
   def self.tradable_balances
-    post 'returnTradableBalances'
+    res = post 'returnTradableBalances'
+    res_hash res
   end
 
   def self.transfer_balance( currency, amount, from_ccount, to_account )
-    post 'transferBalance', currency: currency, amount: amount, fromAccount: from_ccount, toAccount: to_account
+    res = post 'transferBalance', currency: currency, amount: amount, fromAccount: from_ccount, toAccount: to_account
+    res_hash res
   end
 
   def self.margin_account_summary
-    post 'returnMarginAccountSummary'
+    res = post 'returnMarginAccountSummary'
+    res_hash res
   end
 
   def self.margin_buy(currency_pair, rate, amount)
-    post 'marginBuy', currencyPair: currency_pair, rate: rate, amount: amount
+    res = post 'marginBuy', currencyPair: currency_pair, rate: rate, amount: amount
+    res_hash res
   end
 
   def self.margin_sell(currency_pair, rate, amount)
-    post 'marginSell', currencyPair: currency_pair, rate: rate, amount: amount
+    res = post 'marginSell', currencyPair: currency_pair, rate: rate, amount: amount
+    res_hash res
   end
 
   def self.deposit_addresses
-    post 'returnDepositAddresses'
+    res = post 'returnDepositAddresses'
+    res_hash res
   end
 
   def self.generate_new_address( currency )
-    post 'generateNewAddress', currency: currency
+    res = post 'generateNewAddress', currency: currency
+    res_hash res
   end
 
   def self.deposits_withdrawls( start = 0, end_time = Time.now.to_i )
-    post 'returnDepositsWithdrawals', start: start, :end => end_time
+    res = post 'returnDepositsWithdrawals', start: start, :end => end_time
+    res_hash res
   end
 
   protected
@@ -143,5 +153,11 @@ module PoloniexRuby
   def self.create_sign( data )
     encoded_data = Addressable::URI.form_encode( data )
     OpenSSL::HMAC.hexdigest( 'sha512', configuration.secret , encoded_data )
+  end
+
+  def self.res_hash(res)
+    data = JSON.parse(res.body)
+    data.extend DeepSymbolizable
+    return { data: data.deep_symbolize, res: res }
   end
 end
