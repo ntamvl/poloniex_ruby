@@ -1,5 +1,3 @@
-require "deepdetect_ruby/version"
-
 module PoloniexRuby
   class << self
     attr_accessor :configuration
