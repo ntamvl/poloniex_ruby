@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Tam Nguyen"]
   spec.email         = ["ntamvl@gmail.com"]
 
-  spec.summary       = %q{Poloniex API for Ruby on Rails}
-  spec.description   = %q{Poloniex API for Ruby on Rails}
+  spec.summary       = "Poloniex API for Ruby on Rails"
+  spec.description   = "Poloniex API for Ruby"
   spec.homepage      = "https://github.com/ntamvl/poloniex_ruby"
   spec.license       = "MIT"
 
@@ -21,9 +21,9 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.14"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "bundler", "~> 1.3"
+  spec.add_development_dependency "rake", "~> 10.5"
 
-  spec.add_dependency 'rest-client'
-  spec.add_dependency 'addressable'
+  spec.add_dependency "rest-client", "~> 2.0"
+  spec.add_dependency "addressable", "~> 2.5"
 end
