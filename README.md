@@ -31,6 +31,126 @@ PoloniexRuby.setup do | config |
 end
 ```
 
+### returnChartData
+```ruby
+PoloniexRuby.get_all_daily_exchange_rates( currency_pair )
+```
+
+### returnTicker
+```ruby
+PoloniexRuby.ticker
+```
+
+### return24hVolume
+```ruby
+PoloniexRuby.volume
+```
+
+### returnOrderBook
+```ruby
+PoloniexRuby.order_book( currency_pair )
+```
+
+### returnActiveLoans
+```ruby
+PoloniexRuby.active_loans
+```
+
+### returnLendingHistory
+```ruby
+PoloniexRuby.lending_history( start = 0, end_time: Time.now.to_i )
+```
+
+### returnCurrencies
+```ruby
+PoloniexRuby.currencies
+```
+
+### returnCompleteBalances
+```ruby
+PoloniexRuby.complete_balances
+```
+
+### returnOpenOrders
+```ruby
+PoloniexRuby.open_orders( currency_pair )
+```
+
+### returnTradeHistory
+```ruby
+PoloniexRuby.trade_history( currency_pair, start = 0, end_time = Time.now.to_i )
+```
+
+### buy
+```ruby
+PoloniexRuby.buy( currency_pair, rate, amount )
+```
+
+### sell
+```ruby
+PoloniexRuby.sell( currency_pair, rate, amount )
+```
+
+### cancelOrder
+```ruby
+PoloniexRuby.cancel_order( currency_pair, order_number )
+```
+
+### moveOrder
+```ruby
+PoloniexRuby.move_order( order_number, rate )
+```
+
+### widthdraw
+```ruby
+PoloniexRuby.withdraw( currency, amount, address )
+```
+
+### returnAvailableAccountBalances
+```ruby
+PoloniexRuby.available_account_balances
+```
+
+### returnTradableBalances
+```ruby
+PoloniexRuby.tradable_balances
+```
+
+### transferBalance
+```ruby
+PoloniexRuby.transfer_balance( currency, amount, from_ccount, to_account )
+```
+
+### returnMarginAccountSummary
+```ruby
+PoloniexRuby.margin_account_summary
+```
+
+### marginBuy
+```ruby
+PoloniexRuby.margin_buy(currency_pair, rate, amount)
+```
+
+### marginSell
+```ruby
+PoloniexRuby.margin_sell(currency_pair, rate, amount)
+```
+
+### returnDepositAddresses
+```ruby
+PoloniexRuby.deposit_addresses
+```
+
+### generateNewAddress
+```ruby
+PoloniexRuby.generate_new_address( currency )
+```
+
+### returnDepositsWithdrawals
+```ruby
+PoloniexRuby.deposits_withdrawls( start = 0, end_time = Time.now.to_i )
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
